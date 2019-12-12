@@ -6,8 +6,10 @@ A framework of Linear Algebra written in C++
 Make sure you have G++ Compiler first, then type in Terminal :
 
   g++ -c error.cpp Vector.cpp full_mat_c.cpp Main_Matrix.cpp
+
   g++ -o main error.o Vector.o full_mat_c.o Main_Matrix.o
-  ./main 
+  
+  ./main
 ### Contributing
 Clone & Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
