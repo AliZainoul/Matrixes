@@ -15,7 +15,7 @@ FullMtx::FullMtx(int n, int m, double** dbp) {
   nrows = n;
   ncols = m;
   mx = new double* [nrows];
-  for (int i =  0; i< nrows; i++) {
+  for (int i =  0; i < nrows; i++) {
     mx[i] = new double [ncols];
     for (int j = 0; j < ncols; j++) mx[i][j] = dbp[i][j];
   }
@@ -84,4 +84,15 @@ Vector FullMtx::operator*(const Vector& vec) const {
     for (int j = 0; j < ncols; j++) tm[i] += mx[i][j]*vec[j];
   return tm;
 }
+
+FullMtx operator*(const FullMtx& Mtx1, const FullMtx& Mtx2){
+   if (Mtx1.ncols != Mtx2.nrows)
+    error ("ERRORS");
+    FullMtx Mtx (Mtx1.nrows,Mtx2.ncols);
+    for (int i = 0; i < Mtx1.nrows; i++)
+      for (int j = 0; j < Mtx2.ncols; j++)
+        for (int k = 0; k < Mtx1.ncols; k++) Mtx[i][j] += (Mtx1[i][k]) * (Mtx2[k][j]);
+    return Mtx;
+}
+
 // ****** End full_mat_c.cpp  ****** //

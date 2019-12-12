@@ -12,9 +12,17 @@ int main(){
       mat1[i][j] =  n/(abs(i - j) + 1.0);
     }
   }
-  cout << mat1;
+  //cout << mat1;
 
   FullMtx mat2 = {{1,2,3},{4,5,6}};
+  cout << "mat2";
+  cout << mat2;
+  FullMtx mat3 = {{1,1},{2,3},{2,1}};
+  cout << "mat3";
+  cout << mat3;
+  FullMtx Mat = mat2 * mat3;
+  cout << "Mat";
+  cout << Mat;
 
   cout << "Matrix 2 is : " << mat2 << endl;
   getchar();

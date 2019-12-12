@@ -20,10 +20,13 @@ public:
     for (int i = 0; i< nrows; i++) delete[]  mx[i];
     delete[] mx;
   }
+  friend FullMtx operator * (const FullMtx&, const FullMtx&); // Matrix Multiplication
   FullMtx& operator=(const FullMtx&); // Overload of the Operator '='
   Vector operator*(const Vector&) const; // Matrix-Vector multiply
   double* operator[](int i) const { return mx[i]; } // Method that Returns the i-th row
   friend ostream& operator<<(ostream&, const FullMtx&);     // Overload of the Operator '<<'
 };
+
+
 #endif
 //****** End full_mat_c.hpp  ******//

@@ -74,28 +74,28 @@ int main()
   cout << v6b;
   cout<< "                        "<<"\n";
 
-  // std::cout<< "test copy constructeur 5"<<"\n";
+  // cout<< "test copy constructeur 5"<<"\n";
   // Vector w3=v5;
   // cout << w3;
   // cout<< "pas d'appel de l'opÃ©rateur d'assignement car initialisation!"<<"\n";
   // cout<< "                        "<<"\n";
 
-  std::cout<< "test move constructor"<<"\n";
+  cout<< "test move constructor"<<"\n";
   Vector v8(8,8);
   Vector v8b=change(v8);
   cout << v8b;
-  std::cout<< "maintenant, move constructor est appelÃ© automatiquement"<<"\n";
-  std::cout<< "                        "<<"\n";
+  cout<< "maintenant, move constructor est appelÃ© automatiquement"<<"\n";
+  cout<< "                        "<<"\n";
 
-  std::cout<< "test move assignment"<<"\n";
+  cout<< "test move assignment"<<"\n";
   Vector v9(9,9);
   cout << v9;
   v9 = fill();
   cout << v9;
 
-  std::cout<< "move assignment est appelÃ© automatiquement"<<"\n";
-  std::cout<< "car il s'agit d'une affectation et non initialisation"<<"\n";
-  std::cout<< "                        "<<"\n";
+  cout<< "move assignment est appelé automatiquement"<<"\n";
+  cout<< "car il s'agit d'une affectation et non initialisation"<<"\n";
+  cout<< "                        "<<"\n";
 
 
 }
