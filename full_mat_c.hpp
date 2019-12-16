@@ -25,6 +25,17 @@ public:
   Vector operator*(const Vector&) const; // Matrix-Vector multiply
   double* operator[](int i) const { return mx[i]; } // Method that Returns the i-th row
   friend ostream& operator<<(ostream&, const FullMtx&);     // Overload of the Operator '<<'
+/*
+  // FullMtx& operator+=(const FullMtx& FllMtx); // Unary Operator, usage: M += N
+  // FullMtx& operator-=(const FullMtx& FllMtx); // Unary Operator, usage: M -= N
+  // friend FullMtx operator+(const FullMtx&); // Unary Operator, usage: M = +M
+  // friend FullMtx operator-(const FullMtx&); // Unary Operator, usage: M = -M
+  // friend FullMtx operator+(const FullMtx&, const FullMtx&);  // Binary Operator, usage: M = A + B
+  // friend FullMtx operator-(const FullMtx&, const FullMtx&);  // Binary Operator, usage: M = A - B
+  // friend FullMtx operator*(double, const FullMtx&); // Scalar-Matrix Product, usage: M = k * N
+  // friend FullMtx operator*(const FullMtx&, double); // Matrix-Scalar Product, usage: M = N * k
+  // MATRIX NORMS?
+  */
 };
 
 

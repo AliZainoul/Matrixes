@@ -3,8 +3,8 @@
 #include "Vector.hpp"
 #include "error.hpp"
 using namespace std;
-
-// Constructor 1
+// Constructor 0 : Default Constructor
+// Constructor 1 : Test Constructor
 /*Vector::Vector(int i){
 	M_data = new double[i];
 	M_size = i;
@@ -13,8 +13,7 @@ using namespace std;
 			M_data[k]=0;
 		}
 }*/
-
-// Constructor 2 - Example: Vector v(2,3) => v = (3;3)
+// Constructor 2 : Original Constructor Example: Vector v(2,3) => v = (3;3)
 Vector::Vector(int i, double v){
 	M_data = new double[i];
 	M_size = i;
@@ -23,23 +22,21 @@ Vector::Vector(int i, double v){
 			M_data[k]=v;
 		}
 }
-// Constructor 3 - Example:
+// Constructor 3 : List Constructor - Example:
 Vector::Vector(initializer_list<double> lst){
 	M_data = new double[lst.size()];
 	M_size = static_cast<int>(lst.size());
 	cout << "Constructeur 3: allocation du vecteur: "<<M_data<<"\n";
  	std::copy(lst.begin(), lst.end(), M_data);
 }
-
-//  Constructor 4 - Copy - Example :
+//  Constructor 4 : Copy Constructor - Example :
 Vector::Vector(Vector const &v){
 	v.M_size==0? M_data = nullptr : M_data = new double[v.M_size];
 	M_size = v.M_size;
 	cout << "Copy constructor: allocation du vecteur: "<<M_data<<" de taille "<<M_size<<"\n";
 	for (int k=0;k<M_size;++k) M_data[k] = v.M_data[k];
 }
-
-// Constructor 5 - Move - Example:
+// Constructor 5 : Move Constructor - Example:
 Vector::Vector(Vector&& v){
 	M_data=v.M_data;
 	M_size=v.M_size;
@@ -48,6 +45,26 @@ Vector::Vector(Vector&& v){
 	v.M_data = nullptr;
 }
 
+// Constructor 6 : Assignment Operator
+Vector& Vector::operator=(Vector const &v){
+  if (this != &v){
+	  delete[] M_data;
+	  M_data = new double[M_size=v.M_size];
+	  cout << "Assign du vecteur: "<<v.M_data<<"\n";
+	  for(int k=0;k<M_size;++k) M_data[k]=v.M_data[k];
+  }
+  return *this;
+}
+// Constructor 6 - Move Assignment Operator - Usage:
+Vector& Vector::operator=(Vector&& v){
+	cout << "Move du vecteur"<<v.M_data<<" via move assignment"<<"\n";
+	delete[] M_data;
+	M_data = v.M_data;
+	M_size = v.M_size;
+	v.M_data = nullptr;
+	v.M_size = 0;
+	return *this;
+}
 // Destructor
 Vector::~Vector(){
 	cout << "Destruction du vecteur: "<<M_data<<"\n";
@@ -60,30 +77,6 @@ void Vector::affiche(){
   for(int i=0; i<M_size; i++) cout<<i<<" "<<M_data[i]<<endl;
 }
 
-
-// Assignment Operator
-Vector& Vector::operator=(Vector const &v){
-  if (this != &v){
-	  delete[] M_data;
-	  M_data = new double[M_size=v.M_size];
-	  cout << "Assign du vecteur: "<<v.M_data<<"\n";
-	  for(int k=0;k<M_size;++k) M_data[k]=v.M_data[k];
-  }
-  return *this;
-}
-
-
-
-// Move Assignment Operator
-Vector& Vector::operator=(Vector&& v){
-	cout << "Move du vecteur"<<v.M_data<<" via move assignment"<<"\n";
-	delete[] M_data;
-	M_data = v.M_data;
-	M_size = v.M_size;
-	v.M_data = nullptr;
-	v.M_size = 0;
-	return *this;
-}
 
 // Surcharge Of Operator 'Outstream'
 std::ostream& operator << (std::ostream& s, const Vector& v){
@@ -120,53 +113,52 @@ double dot(const Vector& v1, const Vector& v2) {
   return tm;
 }
 
-//
+// Scalar-Vector Product
 Vector operator*(double scalar, const Vector& vec) {
   Vector tm(vec.M_size);
   for (int i = 0; i < vec.M_size; i++) tm[i] = scalar*vec[i];
   return tm;
 }
-
-//
+// Vector-Scalar Product
 Vector operator*(const Vector& vec, double scalar) {
   Vector tm(vec.M_size);
   for (int i = 0; i < vec.M_size; i++) tm[i] = scalar*vec[i];
   return tm;
 }
-//
-Vector operator+(const Vector& vec) {             // usage: vec1 +=  vec2;
+
+// Unary Operator Surcharge, usage: V = +W;
+Vector operator+(const Vector& vec) {
   return vec;
 }
-
-//
-Vector operator-(const Vector& vec) {             // usage: vec1 -= vec2;
+// Unary Operator Surcharge, usage: V = -W;
+Vector operator-(const Vector& vec) {
   Vector minus = vec;
   for (int i = 0; i < vec.M_size; i++) minus[i] = - vec[i];
   return minus;
 }
-//
-Vector operator+(const Vector& v1, const Vector& v2) {         // v=v1+v2
-  if (v1.M_size != v2.M_size ) error("bad vector sizes in vecor addition");
+
+// Binary Operator Surcharge, usage: V = V1 + V2
+Vector operator+(const Vector& v1, const Vector& v2) {
+  if (v1.M_size != v2.M_size ) error("Bad vector sizes in vector addition.");
   Vector sum = v1;
   sum += v2;
   return sum;
 }
-
-//
-Vector operator-(const Vector& v1, const Vector & v2) {         // v=v1-v2
-  if (v1.M_size != v2.M_size ) error("bad vector sizes in vector subtraction");
+// Binary Operator Surcharge, usage: V = V1 - V2
+Vector operator-(const Vector& v1, const Vector & v2) {
+  if (v1.M_size != v2.M_size ) error("Bad vector sizes in vector subtraction.");
   Vector sum = v1;           // It would cause problem without copy constructor
   sum -= v2;
   return sum;
 }
-//
+
+// Unary Operator Surcharge, usage: V += W
 Vector& Vector::operator+=(const Vector& vec) {
-  if (M_size != vec.M_size) error("bad vector sizes in Vcr::operator+=()");
+  if (M_size != vec.M_size) error("Bad vector sizes in Vcr::operator+=()");
   for (int i = 0; i < M_size; i++) M_data[i] += vec.M_data[i];
   return *this;
 }
-
-//
+// Unary Operator Surcharge, usage: V -= W
 Vector& Vector::operator-=(const Vector& vec) {
   if (M_size != vec.M_size) error("bad vector sizes in Vcr::operator-=()");
   for (int i = 0; i < M_size; i++) M_data[i] -= vec.M_data[i];
